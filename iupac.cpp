@@ -28,6 +28,11 @@ int main(){
   char cp[20];
   int len=0, i=0, dbi=0, tbi=0, bri=0, brlen=0, temp=0;
 
+  cout<<"Enter the organic compound: "<<endl;
+  cout<<"use = for double bonds."<<endl;
+  cout<<"C for carbon atoms."<<endl;
+  cout<<"() to add the branch."<<endl;
+  
   fgets(cp, 20, stdin);
 
   for(i = 0; cp[i] != '\0'; i++){
