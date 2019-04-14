@@ -2,6 +2,8 @@
 #include<strings.h>
 using namespace std;
 
+int dbc=0, tbc=0;// The number of double and triple bonds
+
 char dict[10][5]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec"};
 
 class db{
@@ -35,6 +37,7 @@ int main(){
     }
 
     if(cp[i] == '='){
+      dbc++;
       x.stat=1;
       x.loc=i;
     }
@@ -47,7 +50,7 @@ int main(){
         }
       }
       i=bri-1;
-      temp = i;
+      z.loc-=1;
     }
 
   }
@@ -57,9 +60,10 @@ int main(){
     x.loc = len - x.loc;
       if(z.loc) {z.loc = len - z.loc + 1;}
   }
+/*
   if(z.loc > len/2 && x.stat == 0){
     z.loc = len - z.loc + 1;
-  }
+  }*/
 
   //cout<<"The length of the compound is "<<len<<endl;
 
@@ -68,14 +72,14 @@ int main(){
 
   cout<<dict[len-1]; // prints the base name
 
+  if(x.stat){
+  if(x.loc>1){cout<<"-"<<x.loc<<"-";}
+  cout<<"ene";}
 
-  if(x.stat){cout<<"-"<<x.loc<<"-";}
 
-  if(x.stat){cout<<"ene";}
   //else if(){cout<<"yne";}
   else{cout<<"ane";}
-
-
   cout<<endl;
+
   return 0;
 }
