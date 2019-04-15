@@ -29,13 +29,12 @@ public:
 int main(){
   char cp[20];
   int len=0, i=0, dbi=0, tbi=0, bri=0, brlen=0, temp=0;
-/*
+
   cout<<"Enter the organic compound: "<<endl;
   cout<<"use = for double bonds."<<endl;
   cout<<"C for carbon atoms."<<endl;
   cout<<"() to add the branch."<<endl;
-*/
-  cout<<"Use # for triple bond."<<endl;
+  cout<<"Use # for triple bond."<<endl<<endl;
   fgets(cp, 20, stdin);
 
   for(i = 0; cp[i] != '\0'; i++){
@@ -51,7 +50,7 @@ int main(){
     }
 
     if(cp[i] == '#'){
-      dbc++;
+      tbc++;
       y.stat=1;
       y.loc=i;
     }
@@ -64,8 +63,8 @@ int main(){
         }
       }
       i=bri-1;
-      if(x.loc){z.loc = z.loc-1;}
-      if(y.loc){z.loc = z.loc-1;}
+      if(x.stat){z.loc = z.loc - dbc;}
+      if(y.stat){z.loc = z.loc - tbc;}
     }
 
   }
@@ -79,10 +78,10 @@ int main(){
   if(y.loc > len/2)// Changes the position to the lowest possible for triple bonds
   {
     y.loc = len - y.loc;
-      if(y.loc) {y.loc = len - y.loc + 1;}
+      if(z.loc) {y.loc = len - y.loc + 1;}
   }
 
-  if(z.loc > len/2 && x.stat == 0){
+  if(z.loc > len/2 && x.stat == 0 && y.stat == 0){
     z.loc = len - z.loc + 1;}
 
 
@@ -96,7 +95,7 @@ int main(){
   cout<<"yne";}
 
   if(x.stat){
-  if(x.loc>1){cout<<"-"<<x.loc<<"-";}
+  if(x.loc>0){cout<<"-"<<x.loc<<"-";}
   cout<<"ene";}
 
   if(x.stat==0 && y.stat==0){cout<<"ane";}
