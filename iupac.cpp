@@ -65,10 +65,10 @@ int main(){
     x.loc = len - x.loc;
       if(z.loc) {z.loc = len - z.loc + 1;}
   }
-/*
+
   if(z.loc > len/2 && x.stat == 0){
-    z.loc = len - z.loc + 1;
-  }*/
+    z.loc = len - z.loc + 1;}
+
 
   //cout<<"The length of the compound is "<<len<<endl;
 
