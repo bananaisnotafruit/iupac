@@ -4,7 +4,9 @@ using namespace std;
 
 int dbc=0, tbc=0;// The number of double and triple bonds
 
-char dict[10][5]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec"};
+char dict[23][9]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec",
+                  "undec","dodec","tridec","pentadec","hexadec","heptadec","octadec","nonadec",
+                  "eicos","heneicos","docos","tricos"};
 
 class db{
 public:
