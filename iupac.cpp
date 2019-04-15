@@ -33,6 +33,7 @@ int main(){
   cout<<"C for carbon atoms."<<endl;
   cout<<"() to add the branch."<<endl;
 */
+  cout<<"Use # for triple bond."<<endl;
   fgets(cp, 20, stdin);
 
   for(i = 0; cp[i] != '\0'; i++){
@@ -47,6 +48,12 @@ int main(){
       x.loc=i;
     }
 
+    if(cp[i] == '#'){
+      dbc++;
+      y.stat=1;
+      y.loc=i;
+    }
+
     if(cp[i] == '('){
       z.loc = i;
       for(bri=i; cp[bri]!=')'; bri++){
@@ -56,14 +63,21 @@ int main(){
       }
       i=bri-1;
       if(x.loc){z.loc = z.loc-1;}
+      if(y.loc){z.loc = z.loc-1;}
     }
 
   }
 
-  if(x.loc > len/2)// Changes the position to the lowest possible
+  if(x.loc > len/2)// Changes the position to the lowest possible for double bonds
   {
     x.loc = len - x.loc;
       if(z.loc) {z.loc = len - z.loc + 1;}
+  }
+
+  if(y.loc > len/2)// Changes the position to the lowest possible for triple bonds
+  {
+    y.loc = len - y.loc;
+      if(y.loc) {y.loc = len - y.loc + 1;}
   }
 
   if(z.loc > len/2 && x.stat == 0){
@@ -73,17 +87,17 @@ int main(){
   //cout<<"The length of the compound is "<<len<<endl;
 
   if(z.loc)cout<<z.loc<<"-"<<dict[z.len-1]<<"yl";
-
-
   cout<<dict[len-1]; // prints the base name
+
+  if(y.stat){
+  if(y.loc>1){cout<<"-"<<y.loc<<"-";}
+  cout<<"yne";}
 
   if(x.stat){
   if(x.loc>1){cout<<"-"<<x.loc<<"-";}
   cout<<"ene";}
 
-
-  //else if(){cout<<"yne";}
-  else{cout<<"ane";}
+  if(x.stat==0 && y.stat==0){cout<<"ane";}
   cout<<endl;
 
   return 0;
