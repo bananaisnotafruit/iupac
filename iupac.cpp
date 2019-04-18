@@ -10,6 +10,8 @@ char dict[23][9]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec
                   "undec","dodec","tridec","pentadec","hexadec","heptadec","octadec","nonadec",
                   "eicos","heneicos","docos","tricos"};
 
+char cp[20];
+
 class db{
 public:
   int stat;
