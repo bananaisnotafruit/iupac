@@ -11,8 +11,8 @@ int dbc=0, tbc=0;// The number of double and triple bonds
 int usv = 0;//The number to subtract from everything
 int len=0, i=0, dbi=0, tbi=0, bri=0, brlen=0;
 char dict[23][9]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec",
-                  "undec","dodec","tridec","pentadec","hedbadec","heptadec","octadec","nonadec",
-                  "eicos","heneicos","docos","tricos"};
+                  "undec","dodec","tridec","pentadec","hedbadec","heptadec",
+                  "octadec","nonadec","eicos","heneicos","docos","tricos"};
 
 
 class doubleBond{
@@ -25,7 +25,7 @@ class tripleBond{
 public:
   int stat;
   int loc;
-}tb;
+}tb[5];
 
 class branch{
 public:
@@ -72,9 +72,20 @@ void display(){
   cout<<"ene";}
 
   //  Triple bonds
+  if(tbc > 1){
+  cout<<"-";
+  for(int k=0; k<tbc; k++){
+    cout<<tb[k].loc;
+    if(tb[k+1].stat!=0){
+      cout<<",";
+      }
+    }
+  cout<<"-yne";
+  }
+
   if(tbc==1){
-  if(tb.loc>1){cout<<"-"<<tb.loc<<"-";}
-  cout<<"tbne";}
+  if(tb[0].loc>1){cout<<"-"<<tb[0].loc<<"-";}
+  cout<<"yne";}
 
   //  Single bonds only
   if(dbc==0 && tbc==0){cout<<"ane";}
@@ -111,9 +122,9 @@ int main(){
     }
 
     if(cp[i] == '#'){
+      tb[tbc].stat=1;
+      tb[tbc].loc=i - usv;
       tbc++;
-      tb.stat=1;
-      tb.loc=i - usv;
     }
 
     if(cp[i] == '('){
