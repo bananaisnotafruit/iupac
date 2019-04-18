@@ -2,6 +2,8 @@
 #include<strings.h>
 using namespace std;
 
+char cp[20];
+
 int dbc=0, tbc=0;// The number of double and triple bonds
 
 char dict[23][9]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec",
@@ -27,7 +29,6 @@ public:
 }z;
 
 int main(){
-  char cp[20];
   int len=0, i=0, dbi=0, tbi=0, bri=0, brlen=0, temp=0;
 
   cout<<"Enter the organic compound: "<<endl;
