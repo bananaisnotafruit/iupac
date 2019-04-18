@@ -95,7 +95,7 @@ int main(){
   cout<<"yne";}
 
   if(x.stat){
-  if(x.loc>0){cout<<"-"<<x.loc<<"-";}
+  if(x.loc>1){cout<<"-"<<x.loc<<"-";}
   cout<<"ene";}
 
   if(x.stat==0 && y.stat==0){cout<<"ane";}
