@@ -1,38 +1,96 @@
 #include<iostream>
 #include<strings.h>
+#include<stdlib.h>
 using namespace std;
 
 char cp[20];
 
-int dbc=0, tbc=0;// The number of double and triple bonds
 
+
+int dbc=0, tbc=0;// The number of double and triple bonds
+int usv = 0;//The number to subtract from everything
+int len=0, i=0, dbi=0, tbi=0, bri=0, brlen=0;
 char dict[23][9]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec",
-                  "undec","dodec","tridec","pentadec","hexadec","heptadec","octadec","nonadec",
+                  "undec","dodec","tridec","pentadec","hedbadec","heptadec","octadec","nonadec",
                   "eicos","heneicos","docos","tricos"};
 
-char cp[20];
 
-class db{
+class doubleBond{
 public:
   int stat;
   int loc;
-}x;
+}db[5];
 
-class tb{
+class tripleBond{
 public:
   int stat;
   int loc;
-}y;
+}tb;
 
 class branch{
 public:
   int len;
   int loc;
 }z;
+/*
+void numcorr(){
+  if(db.loc > len/2)// Changes the position to the lowest possible for double bonds
+  {
+    db.loc = len - db.loc;
+      if(z.loc) {z.loc = len - z.loc + 1;}
+  }
+
+  if(tb.loc > len/2)// Changes the position to the lowest possible for triple bonds
+  {
+    tb.loc = len - tb.loc;
+      if(z.loc) {tb.loc = len - tb.loc + 1;}
+  }
+
+  if(z.loc > len/2 && db.stat == 0 && tb.stat == 0){
+    z.loc = len - z.loc + 1;}
+}
+*/
+
+void display(){
+  if(z.loc)cout<<z.loc<<"-"<<dict[z.len-1]<<"tbl";
+  cout<<dict[len-1]; // prints the base name
+
+  //  Double bonds
+  if(dbc > 1){
+  cout<<"-";
+  for(int k=0; k<dbc; k++){
+    cout<<db[k].loc;
+    if(db[k+1].stat!=0){
+      cout<<",";
+      }
+    }
+  cout<<"-ene";
+  }
+
+  if(dbc==1){
+  if(db[0].loc>1){cout<<"-"<<db[0].loc<<"-";}
+  cout<<"ene";}
+
+  //  Triple bonds
+  if(tbc==1){
+  if(tb.loc>1){cout<<"-"<<tb.loc<<"-";}
+  cout<<"tbne";}
+
+  //  Single bonds only
+  if(dbc==0 && tbc==0){cout<<"ane";}
+  cout<<endl;
+}
+
+
+
+void update_usv(){
+  usv = dbc + tbc;
+}
+
+
 
 int main(){
-  int len=0, i=0, dbi=0, tbi=0, bri=0, brlen=0, temp=0;
-
+  system("clear");
   cout<<"Enter the organic compound: "<<endl;
   cout<<"use = for double bonds."<<endl;
   cout<<"C for carbon atoms."<<endl;
@@ -47,15 +105,15 @@ int main(){
     }
 
     if(cp[i] == '='){
+      db[dbc].stat = 1;//sets the double bond element to active
+      db[dbc].loc = i - usv;
       dbc++;
-      x.stat=1;
-      x.loc=i;
     }
 
     if(cp[i] == '#'){
       tbc++;
-      y.stat=1;
-      y.loc=i;
+      tb.stat=1;
+      tb.loc=i - usv;
     }
 
     if(cp[i] == '('){
@@ -66,43 +124,17 @@ int main(){
         }
       }
       i=bri-1;
-      if(x.stat){z.loc = z.loc - dbc;}
-      if(y.stat){z.loc = z.loc - tbc;}
+      if(dbc){z.loc = z.loc - dbc;}//checks if double bonds or
+      if(tbc){z.loc = z.loc - tbc;}//triple bonds exist
     }
+    update_usv();
 
   }
 
-  if(x.loc > len/2)// Changes the position to the lowest possible for double bonds
-  {
-    x.loc = len - x.loc;
-      if(z.loc) {z.loc = len - z.loc + 1;}
-  }
 
-  if(y.loc > len/2)// Changes the position to the lowest possible for triple bonds
-  {
-    y.loc = len - y.loc;
-      if(z.loc) {y.loc = len - y.loc + 1;}
-  }
+  //numcorr();
+  display();
 
-  if(z.loc > len/2 && x.stat == 0 && y.stat == 0){
-    z.loc = len - z.loc + 1;}
-
-
-  //cout<<"The length of the compound is "<<len<<endl;
-
-  if(z.loc)cout<<z.loc<<"-"<<dict[z.len-1]<<"yl";
-  cout<<dict[len-1]; // prints the base name
-
-  if(y.stat){
-  if(y.loc>1){cout<<"-"<<y.loc<<"-";}
-  cout<<"yne";}
-
-  if(x.stat){
-  if(x.loc>1){cout<<"-"<<x.loc<<"-";}
-  cout<<"ene";}
-
-  if(x.stat==0 && y.stat==0){cout<<"ane";}
-  cout<<endl;
 
   return 0;
 }
