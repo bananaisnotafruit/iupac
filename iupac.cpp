@@ -27,6 +27,7 @@ public:
 }z;
 
 int main(){
+  int fg(char cp,int n);
   char cp[20];
   int len=0, i=0, dbi=0, tbi=0, bri=0, brlen=0, temp=0;
 
@@ -36,7 +37,6 @@ int main(){
   cout<<"() to add the branch."<<endl;
   cout<<"Use # for triple bond."<<endl<<endl;
   fgets(cp, 20, stdin);
-
   for(i = 0; cp[i] != '\0'; i++){
 
     if(cp[i] == 'C'){
@@ -103,3 +103,10 @@ int main(){
 
   return 0;
 }
+int fg(char cp,int n)
+{    if (cp[n]=='C' && cp[n+1]=='H' && cp[n+2]=='O')
+  return 0;
+ if (cp[n]=='C' && cp[n+1]=='O' && cp[n+2]=='O' && cp[n+3]=='H')
+   return 1;
+}
+ 
