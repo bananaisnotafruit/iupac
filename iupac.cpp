@@ -7,11 +7,13 @@ char cp[20];
 
 
 
-int dbc=0, tbc=0;// The number of double and triple bonds
+int dbc=0, tbc=0, brc=0;// The number of double, triple bonds and branches
 int usv = 0;//The number to subtract from everything
 int len=0, i=0, dbi=0, tbi=0, bri=0, brlen=0;
+
+
 char dict[23][9]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec",
-                  "undec","dodec","tridec","pentadec","hedbadec","heptadec",
+                  "undec","dodec","tridec","tetradec","pentadec","hexadec","heptadec",
                   "octadec","nonadec","eicos","heneicos","docos","tricos"};
 
 
@@ -52,7 +54,7 @@ void numcorr(){
 */
 
 void display(){
-  if(z.loc)cout<<z.loc<<"-"<<dict[z.len-1]<<"tbl";
+  if(z.loc)cout<<z.loc<<"-"<<dict[z.len-1]<<"yl";
   cout<<dict[len-1]; // prints the base name
 
   //  Double bonds
