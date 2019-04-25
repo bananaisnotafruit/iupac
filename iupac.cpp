@@ -29,11 +29,12 @@ public:
   int loc;
 }tb[5];
 
-class branch{
+class branchClass{
 public:
   int len;
   int loc;
-}z;
+  int fGroup;
+}br[5];
 /*
 void numcorr(){
   if(db.loc > len/2)// Changes the position to the lowest possible for double bonds
@@ -53,8 +54,32 @@ void numcorr(){
 }
 */
 
+
+int branch(int a){
+  br[bri].loc = a - usv;//because ( is also a character that takes up a position
+  for(int i = a; cp[i] != ')'; i++){
+    if(cp[i] == 'C'){
+      br[bri].len += 1;
+    }
+  }
+
+  cout<<br[bri].loc<<" "<<br[bri].len<<endl;
+  bri++;
+  return a + br[bri].len + 2;
+}
+
+
+
+
+
+
 void display(){
-  if(z.loc)cout<<z.loc<<"-"<<dict[z.len-1]<<"yl";
+  //checking for branches and printing their names
+  if(bri){
+    for(int i = 0; i < bri; i++){
+      cout<<br[i].loc<<"-"<<dict[br[i].len-1]<<"yl";
+    }
+  }
   cout<<dict[len-1]; // prints the base name
 
   //  Double bonds
@@ -98,6 +123,9 @@ void display(){
 
 void update_usv(){
   usv = dbc + tbc;
+  for(int i = 0; i<bri; i++){
+    usv += br[i].len + 2;
+  }
 }
 
 
@@ -130,15 +158,7 @@ int main(){
     }
 
     if(cp[i] == '('){
-      z.loc = i;
-      for(bri=i; cp[bri]!=')'; bri++){
-        if(cp[bri] == 'C'){
-          z.len++;
-        }
-      }
-      i=bri-1;
-      if(dbc){z.loc = z.loc - dbc;}//checks if double bonds or
-      if(tbc){z.loc = z.loc - tbc;}//triple bonds exist
+      i = branch(i);
     }
     update_usv();
 
