@@ -63,7 +63,7 @@ int branch(int a){
     }
   }
 
-  cout<<br[bri].loc<<" "<<br[bri].len<<endl;
+  //cout<<br[bri].loc<<" "<<br[bri].len<<endl;
   bri++;
   return a + br[bri].len + 2;
 }
@@ -77,7 +77,10 @@ void display(){
   //checking for branches and printing their names
   if(bri){
     for(int i = 0; i < bri; i++){
-      cout<<br[i].loc<<"-"<<dict[br[i].len-1]<<"yl";
+      if(i>0){
+        cout<<"-";
+      }
+      cout<<br[i].loc<<"-"<<dict[br[i].len - 1]<<"yl";
     }
   }
   cout<<dict[len-1]; // prints the base name
