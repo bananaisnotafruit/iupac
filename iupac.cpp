@@ -1,5 +1,5 @@
 #include<iostream>
-#include<strings.h>
+#include<cstring>
 #include<stdlib.h>
 using namespace std;
 
@@ -133,14 +133,20 @@ void update_usv(){
 
 
 
-int main(){
-  system("clear");
-  cout<<"Enter the organic compound: "<<endl;
-  cout<<"use = for double bonds."<<endl;
-  cout<<"C for carbon atoms."<<endl;
-  cout<<"() to add the branch."<<endl;
-  cout<<"Use # for triple bond."<<endl<<endl;
-  fgets(cp, 20, stdin);
+int main(int argc, char **argv){
+  if (argc == 1){
+    system("clear");
+    cout<<"Enter the organic compound: "<<endl;
+    cout<<"use = for double bonds."<<endl;
+    cout<<"C for carbon atoms."<<endl;
+    cout<<"() to add the branch."<<endl;
+    cout<<"Use # for triple bond."<<endl<<endl;
+    fgets(cp, 20, stdin);
+  }
+
+  else{
+    strcpy(cp, argv[1]);
+  }
 
   for(i = 0; cp[i] != '\0'; i++){
 
