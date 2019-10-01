@@ -17,6 +17,7 @@ char dict[23][9]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec
                   "octadec","nonadec","eicos","heneicos","docos","tricos"};
 
 
+
 class doubleBond{
 public:
   int stat;
