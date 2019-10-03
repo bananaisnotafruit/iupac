@@ -9,8 +9,7 @@ char cp[20];
 
 int dbc=0, tbc=0, brc=0;// The number of double, triple bonds and branches
 int usv = 0;//The number to subtract from everything
-int len=0, i=0, dbi=0, tbi=0, bri=0, brlen=0;
-
+int len=0, i=0, bri=0, brlen=0;
 
 char dict[23][9]={"meth","eth","prop","but","pent","hex","hept","oct","non","dec",
                   "undec","dodec","tridec","tetradec","pentadec","hexadec","heptadec",
@@ -35,6 +34,9 @@ public:
   int len;
   int loc;
   int fGroup;
+  void duplicates(){
+
+  }
 }br[5];
 /*
 void numcorr(){
