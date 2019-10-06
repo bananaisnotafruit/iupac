@@ -1,11 +1,39 @@
-#include<iostream>
-#include<cstring>
-#include<stdlib.h>
-using namespace std;
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fstream>
+#include <unistd.h>
+#include <termios.h>
+#include <cstring>
+//using namespace std;
+
 
 char cp[20];
 
+char getch() {
+        char buf = 0;
+        struct termios old = {0};
+        if (tcgetattr(0, &old) < 0)
+                perror("tcsetattr()");
+        old.c_lflag &= ~ICANON;
+        old.c_lflag &= ~ECHO;
+        old.c_cc[VMIN] = 1;
+        old.c_cc[VTIME] = 0;
+        if (tcsetattr(0, TCSANOW, &old) < 0)
+                perror("tcsetattr ICANON");
+        if (read(0, &buf, 1) < 0)
+                perror ("read()");
+        old.c_lflag |= ICANON;
+        old.c_lflag |= ECHO;
+        if (tcsetattr(0, TCSADRAIN, &old) < 0)
+                perror ("tcsetattr ~ICANON");
+        return (buf);
+}
 
+using std::cout;
+using std::cin;
+using std::endl;
+using std::ifstream;
 
 int dbc=0, tbc=0, brc=0;// The number of double, triple bonds and branches
 int usv = 0;//The number to subtract from everything
@@ -72,11 +100,31 @@ int branch(int a){
 }
 
 
+void reset(){
+    for(int i = 0; i < 5; i++){
+        db[i].loc = 0;
+        db[i].stat = 0;
+        tb[i].loc = 0;
+        tb[i].stat = 0;
+        br[i].len = 0;
+        br[i].loc = 0;
+    }
+    len = 0;
+    dbc = tbc = 0;
+    i = 0;
+    usv = 0;
+    tbc = 0;
+    dbc = 0;
+    bri = 0;
+    brc = 0;
+    strcpy(cp, "");
+}
 
 
-
-
-void display(){
+int display(){
+    if(len == 0){
+        return 0;
+    }
   //checking for branches and printing their names
   if(bri){
     for(int i = 0; i < bri; i++){
@@ -123,6 +171,8 @@ void display(){
   //  Single bonds only
   if(dbc==0 && tbc==0){cout<<"ane";}
   cout<<endl;
+
+  return 0;
 }
 
 
@@ -134,24 +184,8 @@ void update_usv(){
   }
 }
 
-
-
-int main(int argc, char **argv){
-  if (argc == 1){
-    system("clear");
-    cout<<"Enter the organic compound: "<<endl;
-    cout<<"use = for double bonds."<<endl;
-    cout<<"C for carbon atoms."<<endl;
-    cout<<"() to add the branch."<<endl;
-    cout<<"Use # for triple bond."<<endl<<endl;
-    fgets(cp, 20, stdin);
-  }
-
-  else{
-    strcpy(cp, argv[1]);
-  }
-
-  for(i = 0; cp[i] != '\0'; i++){
+void name(const char* cp){
+    for(i = 0; cp[i] != '\0'; i++){
 
     if(cp[i] == 'C'){
       len++;
@@ -175,11 +209,61 @@ int main(int argc, char **argv){
     update_usv();
 
   }
+}
 
+int main(int argc, char **argv){
+   char inp; 
+    
+ if(argc == 2){
+     strcpy(cp, argv[1]);
+     name(cp);
+     display();
+     return 0;
+ }
 
-  //numcorr();
-  display();
+  else{
+    cout<<"Enter a method of input:\n";
+    cout<<"1 - Manually enter compound.\n";
+    cout<<"2 - Choose a text file.\n";
+    inp = getch();
+  }
+  if(inp == '1'){
+    system("clear");
+    cout<<"Enter the organic compound: "<<endl;
+    cout<<"use = for double bonds."<<endl;
+    cout<<"C for carbon atoms."<<endl;
+    cout<<"() to add the branch."<<endl;
+    cout<<"Use # for triple bond."<<endl<<endl;
+    fgets(cp, 20, stdin);
+    name(cp);
+    display();
+  }
+  else if(inp == '2'){
+    char file[10];
+    cout<<"Enter file name:\n";
+    cin>>file;
+    ifstream infile;
+    infile.open(file);
 
+    if(!infile){
+        cout<<"Unable to open file.";
+    }
+
+    else{
+    cout<<"Opening "<<file<<endl;
+    }
+
+    while(!infile.eof()){
+        infile >> cp;
+        cout<<cp<<" ";
+        name(cp); 
+        display();
+        cout<<endl<<endl;
+        reset();
+       }
+
+    
+  }
 
   return 0;
 }
