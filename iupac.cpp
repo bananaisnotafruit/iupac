@@ -145,12 +145,14 @@ int display(){
       cout<<",";
       }
     }
-  cout<<"-ene";
+  tbc != 0?cout<<"-en":cout<<"-ene";
   }
 
   if(dbc==1){
   if(db[0].loc>1){cout<<"-"<<db[0].loc<<"-";}
-  cout<<"ene";}
+  tbc != 0?cout<<"en":cout<<"ene";
+  
+  }
 
   //  Triple bonds
   if(tbc > 1){
@@ -222,6 +224,7 @@ int main(int argc, char **argv){
  }
 
   else{
+    system("clear");
     cout<<"Enter a method of input:\n";
     cout<<"1 - Manually enter compound.\n";
     cout<<"2 - Choose a text file.\n";
@@ -239,6 +242,7 @@ int main(int argc, char **argv){
     display();
   }
   else if(inp == '2'){
+    system("clear");
     char file[10];
     cout<<"Enter file name:\n";
     cin>>file;
@@ -246,19 +250,20 @@ int main(int argc, char **argv){
     infile.open(file);
 
     if(!infile){
-        cout<<"Unable to open file.";
+        cout<<"Unable to open file.\n";
+        return 1;
     }
 
     else{
-    cout<<"Opening "<<file<<endl;
+    cout<<"Opening "<<file<<endl<<endl;
     }
 
     while(!infile.eof()){
         infile >> cp;
-        cout<<cp<<" ";
+        cout<<cp<<"\n";
         name(cp); 
         display();
-        cout<<endl<<endl;
+        cout<<endl;
         reset();
        }
 
