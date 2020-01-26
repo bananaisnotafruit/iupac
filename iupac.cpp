@@ -216,12 +216,42 @@ void name(const char* cp){
 int main(int argc, char **argv){
    char inp; 
     
- if(argc == 2){
-     strcpy(cp, argv[1]);
-     name(cp);
-     display();
+ if(argc > 1){
+     if(!strcmp(argv[1], "-c")){
+     	strcpy(cp, argv[2]);
+     	name(cp);
+     	display();
      return 0;
- }
+     }
+     if(!strcmp(argv[1], "-f")){
+	    system("clear");
+	    char file[10];
+	    strcpy(file, argv[2]);
+	    ifstream infile;
+	    infile.open(file);
+
+	    if(!infile){
+		cout<<"Unable to open file.\n";
+		return 1;
+	    }
+
+	    else{
+	    cout<<"Opening "<<file<<endl<<endl;
+	    }
+
+	    while(!infile.eof()){
+		infile >> cp;
+		cout<<cp<<"\n";
+		name(cp); 
+		display();
+		cout<<endl;
+		reset();
+	       }
+
+    
+	  }
+     return 0;
+     }
 
   else{
     system("clear");
